@@ -1,4 +1,6 @@
-
+HELP.md
+/target/
+!.mvn/wrapper/maven-wrapper.jar
 .idea/workspace.xml
 
 ### STS ###
@@ -56,3 +58,6 @@ client/rpl_utility.h
 /target/
 *.properties
 *.MF
+
+
+

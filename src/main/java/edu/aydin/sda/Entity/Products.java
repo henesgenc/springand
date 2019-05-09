@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 @Table(name="products")
@@ -21,6 +22,8 @@ public class Products {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id")
 	Stocks Stock;
+	/*@ManyToMany
+	Colors Color;*/
 	public Products() {}
 	public Products(String image, String name, String type, float price,String detail, Stocks stock){
 		this.image = image;
@@ -68,5 +71,11 @@ public class Products {
 	}
 	public void setStock(Stocks stock) {
 		this.Stock = stock;
+	}/*
+	public Colors getColor() {
+		return Color;
 	}
+	public void setColor(Colors color) {
+		Color = color;
+	}*/
 }

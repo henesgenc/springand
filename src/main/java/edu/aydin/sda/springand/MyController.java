@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import edu.aydin.sda.Entity.Colors;
 import edu.aydin.sda.Entity.Products;
 import edu.aydin.sda.Entity.Stocks;
 import edu.aydin.sda.Entity.Users;
@@ -14,13 +15,17 @@ import edu.aydin.sda.Util.Utill;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
 public class MyController {
+	ArrayList<Products> cart = new ArrayList<Products>();
 	@RequestMapping("/")
     public String Home(){
 	    return "/index.jsp";
@@ -164,11 +169,47 @@ public class MyController {
 		session.close();
 		return "redirect:/products";
 	}
+	/*@RequestMapping("/setColor{id}-{color}")
+	public String AddColor(
+			@PathVariable("id")int id,
+			@PathVariable("color")String color) {
+		Session session = Utill.getSessionFactory().openSession();
+		Transaction transaction = null;
+		transaction = session.beginTransaction();
+		Colors s = new Colors();
+		Products product = session.createQuery("from Products where id = "+id,Products.class).getSingleResult();
+		s.setId(id);
+		s.setColor(color);
+		product.setColor(s);
+		session.save(product);
+		transaction.commit();
+		session.close();
+		return "redirect:/products";
+	}*/
 	@RequestMapping("/deneme")
 	public String ShowStock() {
 		Session session = Utill.getSessionFactory().openSession();
 		Products product = session.createQuery("from Products where id = "+66,Products.class).getSingleResult();
+		session.close();
 		System.out.println(product.getStock().getStock());
 		return "";
+	}
+	@RequestMapping("/AddCart-{id}")
+	public String AddCart(
+			@PathVariable("id")int id,
+			HttpSession session) {
+		Session session1 = Utill.getSessionFactory().openSession();
+		Products product = session1.createQuery("from Products where id = "+id,Products.class).getSingleResult();
+		cart.add(product);
+		for(Products x:cart) {
+			System.out.println(x.getID() + "  " + x.getDetail());
+		}
+		session.setAttribute("cart", cart);
+		return "redirect:javascript:history.back()";
+	}
+	@RequestMapping("/Cart")
+	public String ShowCart(
+			HttpSession session){
+		return "/cart.jsp";
 	}
 }

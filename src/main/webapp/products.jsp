@@ -126,14 +126,14 @@ height:470px;
 					<a href="./register"><button type="button" class="btn btn-success">Register</button></a>
 			<%} else{ %>
 			  	<p>
-			<%= request.getSession().getAttribute("username") %>
+			<%= session.getAttribute("username") %>
 			<a href="./logout"><button type="button" class="btn btn-danger">Logout</button></a>
 			<%}  %>
 			</p>
 				</div>
     </nav>
     <div id="cartdiv">
- <a href="./viewCart"><img src=".\img\cartlogo3.png" height="100px" width="200px"></a>
+ <a href="./Cart"><img src=".\img\cartlogo3.png" height="100px" width="200px"></a>
 </div>  
     <!-- Page Content -->
     <div class="container">
@@ -183,22 +183,30 @@ height:470px;
           </div>
           <div class="row">
           <c:forEach items ="${products}" var="value">
-          <div class="col-lg-4 col-md-6 mb-4" id="urunler">
-	              <div class="card h-100">
-	      			<a href="product<c:out value = "${value.getID()}"/>">
-	      			<img src=".\img\<c:out value = "${value.getImage()}"/>" height="250px" width="250px" id ="products"/>
-	      			</a>
-	      			<div class="card-body">
-	                <h4 class="card-title">
-	                  <a href="/product<c:out value = "${value.getID()}"/>"><c:out value = "${value.getProduct_Name()}"/></a>
-	                  </h4>
-	                  <h5>₺ <c:out value = "${value.getPrice()}"/><br></h5>
-	                  <a href="addCart?id=<c:out value = "${value.getID()}"/>">
-	                  <button type="button" class="btn btn-success" id="addcartbutton">Add Cart</button>
-	                  </a>
-	                </div>
-	              </div>
-	            </div>
-	            </c:forEach>
+	          <div class="col-lg-4 col-md-6 mb-4" id="urunler">
+	     		<div class="card h-100">
+					<a href="product<c:out value = "${value.getID()}"/>">
+						<img src=".\img\<c:out value = "${value.getImage()}"/>" height="250px" width="250px" id ="products"/>
+					</a>
+					<div class="card-body">
+						<h4 class="card-title">
+							<a href="/product<c:out value = "${value.getID()}"/>">
+								<c:out value = "${value.getProduct_Name()}"/>
+							</a>
+						</h4>
+						<h5>
+							₺ <c:out value = "${value.getPrice()}"/><br>
+						</h5>
+						<a href="AddCart-<c:out value = "${value.getID()}"/>">
+							<button type="button" class="btn btn-success" id="addcartbutton">
+								Add Cart
+							</button>
+						</a>
+					</div>
+				</div>
+			</div>
+			
+			</c:forEach>
+			</div>
 </body>
 </html>

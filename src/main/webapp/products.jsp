@@ -190,7 +190,7 @@ height:470px;
 	      			</a>
 	      			<div class="card-body">
 	                <h4 class="card-title">
-	                  <a href="viewProductDetails?id=<c:out value = "${value.getID()}"/>">Detail</a>
+	                  <a href="/product<c:out value = "${value.getID()}"/>"><c:out value = "${value.getProduct_Name()}"/></a>
 	                  </h4>
 	                  <h5>₺ <c:out value = "${value.getPrice()}"/><br></h5>
 	                  <a href="addCart?id=<c:out value = "${value.getID()}"/>">

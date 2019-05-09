@@ -70,7 +70,7 @@ public class MyController {
 		model.addAttribute("products",products);
 		session.close();
 		for(Products p: products)
-			System.out.println(p.getProduct_Name());
+			System.out.println(p.getDetail());
 		return "/products.jsp";
 	}
 	@RequestMapping("/products-{type}")

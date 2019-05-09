@@ -61,7 +61,7 @@ color: orange;
 #sagbilgi{
 	height : 400px;
 	width : 800px;
-
+	font-family : sans-serif;
 	margin-left : 750px;
 	margin-top : -300px;
 }

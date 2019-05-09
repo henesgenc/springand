@@ -54,3 +54,5 @@ client/rpl_tblmap.cc
 client/rpl_tblmap.h
 client/rpl_utility.h
 /target/
+*.properties
+*.MF

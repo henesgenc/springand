@@ -1,10 +1,16 @@
 package edu.aydin.sda.Entity;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -22,17 +28,25 @@ public class Products {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id")
 	Stocks Stock;
-	/*@ManyToMany
-	Colors Color;*/
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "colorProduct",
+		joinColumns = @JoinColumn(name = "post_id"),
+		inverseJoinColumns = @JoinColumn(name = "color_id")
+	)
+	private List<Colors> colors = new ArrayList<Colors>();
 	public Products() {}
-	public Products(String image, String name, String type, float price,String detail, Stocks stock){
+	public Products(int id, String image, String product_Name, String product_Type, float price, String detail,
+			Stocks stock, List<Colors> colors) {
+		this.id = id;
 		this.image = image;
-		this.Product_Name = name;
-		this.Product_Type = type;
-		this.Price = price;
-		this.Detail = detail;
-		this.Stock = stock;
+		Product_Name = product_Name;
+		Product_Type = product_Type;
+		Price = price;
+		Detail = detail;
+		Stock = stock;
+		this.colors = colors;
 	}
+
 	public int getID() {
 		return id;
 	}
@@ -71,11 +85,11 @@ public class Products {
 	}
 	public void setStock(Stocks stock) {
 		this.Stock = stock;
-	}/*
-	public Colors getColor() {
-		return Color;
 	}
-	public void setColor(Colors color) {
-		Color = color;
-	}*/
+	public List<Colors> getColors() {
+		return colors;
+	}
+	public void setColors(Colors colors) {
+		this.colors.add(colors);
+	}
 }

@@ -22,6 +22,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.websocket.server.PathParam;
 
 @Controller
 public class MyController {
@@ -169,23 +170,26 @@ public class MyController {
 		session.close();
 		return "redirect:/products";
 	}
-	/*@RequestMapping("/setColor{id}-{color}")
+	@RequestMapping("/setColor{id}-{color}")
 	public String AddColor(
 			@PathVariable("id")int id,
 			@PathVariable("color")String color) {
 		Session session = Utill.getSessionFactory().openSession();
 		Transaction transaction = null;
 		transaction = session.beginTransaction();
-		Colors s = new Colors();
 		Products product = session.createQuery("from Products where id = "+id,Products.class).getSingleResult();
-		s.setId(id);
-		s.setColor(color);
-		product.setColor(s);
+		Colors colorQuery = session.createQuery("from Colors where color = '"+color+"'",Colors.class).getSingleResult();
+		product.setColors(colorQuery);
 		session.save(product);
+		Products p = session.createQuery("from Products where id = "+id,Products.class).getSingleResult();
+		List<Colors> colorss = p.getColors();
+		for(Colors c : colorss) {
+			System.out.println(c.getColor());
+		}
 		transaction.commit();
 		session.close();
 		return "redirect:/products";
-	}*/
+	}
 	@RequestMapping("/deneme")
 	public String ShowStock() {
 		Session session = Utill.getSessionFactory().openSession();
@@ -211,5 +215,23 @@ public class MyController {
 	public String ShowCart(
 			HttpSession session){
 		return "/cart.jsp";
+	}
+	@RequestMapping("DeleteFromCart-{id}")
+	public String DeleteFromCart(
+			@PathVariable("id")int id,
+			HttpSession session) {
+		for(Products c:cart) {
+			if(cart.size()==1) {
+				cart.remove(c);
+				session.setAttribute("cart",null);
+				break;
+			}
+			else if(c.getID() == id) {
+				cart.remove(c);
+				session.setAttribute("cart",cart);
+				break;
+			}
+		}
+		return "redirect:/Cart";
 	}
 }

@@ -143,7 +143,7 @@ tr{
     			<tr><h5>₺ <c:out value = "${value.getPrice()}"/><br></h5></tr>
     			<tr><p> <c:out value = "${value.getDetail()}"/> </p></tr>
     			<tr><p> Stocks <c:out value = "${value.getStock().getStock()}"/> </p></tr>
-    			<tr><a href="addCart<c:out value = "${value.getID()}"/>"><button type="button" class="btn btn-success" id="addcartbutton" >Add Cart</button></a></tr>
+    			<tr><a href="AddCart-<c:out value = "${value.getID()}"/>"><button type="button" class="btn btn-success" id="addcartbutton" >Add Cart</button></a></tr>
     			
     		</table>
     	</div>

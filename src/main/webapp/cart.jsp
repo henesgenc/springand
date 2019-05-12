@@ -63,7 +63,7 @@ margin:10px;
 	margin-top:50px;
 }
 </style>
-<title>Insert title here</title>
+<title>My Cart</title>
 </head>
 <body>
 <!-- Navigation -->
@@ -81,10 +81,10 @@ margin:10px;
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="./filter?type=Computer">Computers</a>
+              <a class="nav-link" href="./products-computer">Computers</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="./filter?type=Phones">Phones</a>
+              <a class="nav-link" href="./products-phone">Phones</a>
             </li>
           </ul>
         </div>
@@ -103,20 +103,32 @@ margin:10px;
 				</div>
     </nav>
 	<div id ="cartlist">
-	<table>
-	<%
+	<table style="width: auto; margin-bottom:5%">
+	
+		<%
 			Object cart = session.getAttribute("cart");
 			if(cart!=null){
+		%>
+		<tr class="cartlisttr">
+		<td style="width: 100px"></td>
+		<td class ="tddizayn" style="width: 100px">Name</td>
+		<td class ="tddizayn" style="width: 100px">Price</td>
+		<td class ="tddizayn" style="width: 100px"></td>
+		<td class ="tddizayn" style="width: 100px">Count</td>
+		<td class ="tddizayn" style="width: 100px">Delete</td>
+		</tr>	
+	<% 
 			ArrayList<Products> cartList = (ArrayList<Products>)cart;
 		for(Products p: cartList){
 	%>	
 		<tr class="cartlisttr">
-		<td style="width: 100px"><img src=".\img\<%= p.getImage() %>" width="50px" height="50px"></td>
-		 <td class ="tddizayn" style="width: 100px"><%= p.getProduct_Name()%></td>
-	     <td class ="tddizayn" style="width: 100px"><%= p.getPrice() %> ₺ </td> 
-		 <td class ="tddizayn" style="width: 100px"><a href="product<%= p.getID() %>">(Details)</a></td>
-		 <td class ="tddizayn"  style="width: 100px"><a href="deleteproduct<%= p.getID() %>"><img alt="" src=".\img\delete.png" style ="width: 24px; height: 24px;"></a></td>
-	</tr>
+			<td style="width: 100px"><img src=".\img\<%= p.getImage() %>" width="50px" height="50px"></td>
+			<td class ="tddizayn" style="width: 100px"><%= p.getProduct_Name()%></td>
+			<td class ="tddizayn" style="width: 100px"><%= p.getPrice() %> ₺ </td> 
+			<td class ="tddizayn" style="width: 100px"><a href="product<%= p.getID() %>">(Details)</a></td>
+			<td class ="tddizayn" style="width: 100px">1</td>
+			<td class ="tddizayn"  style="width: 100px"><a href="DeleteFromCart-<%= p.getID() %>"><img alt="" src=".\img\delete.png" style ="width: 24px; height: 24px;"></a></td>
+		</tr>
 	<% } %></table><% }else{%>
 		<h1>Your cart is empty</h1>
 	<% } %>

@@ -27,5 +27,6 @@
         <mapping class="edu.aydin.sda.Entity.Products" />
         <mapping class="edu.aydin.sda.Entity.Users" />
         <mapping class="edu.aydin.sda.Entity.Stocks" />
+        <mapping class="edu.aydin.sda.Entity.Colors" />
     </session-factory>
 </hibernate-configuration>

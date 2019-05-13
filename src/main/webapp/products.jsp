@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Shop Homepage - Start Bootstrap Template</title>
+    <title><c:out value="${type}"/></title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -114,7 +114,7 @@ height:470px;
               <a class="nav-link" href="./products-computer">Computers</a>
             </li>
             <li class="nav-item">
-             <a class="nav-link" href="./products-phone">Phones</a>
+             <a class="nav-link" href="./products-phones">Phones</a>
             </li>            
           </ul>
         </div>

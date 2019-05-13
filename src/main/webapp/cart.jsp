@@ -84,7 +84,7 @@ margin:10px;
               <a class="nav-link" href="./products-computer">Computers</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="./products-phone">Phones</a>
+              <a class="nav-link" href="./products-phones">Phones</a>
             </li>
           </ul>
         </div>

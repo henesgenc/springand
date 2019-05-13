@@ -35,16 +35,12 @@ public class Products {
 	)
 	private List<Colors> colors = new ArrayList<Colors>();
 	public Products() {}
-	public Products(int id, String image, String product_Name, String product_Type, float price, String detail,
-			Stocks stock, List<Colors> colors) {
-		this.id = id;
+	public Products(String image, String product_Name, String product_Type, float price, String detail) {
 		this.image = image;
-		Product_Name = product_Name;
-		Product_Type = product_Type;
-		Price = price;
-		Detail = detail;
-		Stock = stock;
-		this.colors = colors;
+		this.Product_Name = product_Name;
+		this.Product_Type = product_Type;
+		this.Price = price;
+		this.Detail = detail;
 	}
 
 	public int getID() {

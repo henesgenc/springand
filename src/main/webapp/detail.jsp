@@ -108,10 +108,10 @@ tr{
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="./filter?type=Computer">Computers</a>
+              <a class="nav-link" href="./products-computer">Computers</a>
             </li>
             <li class="nav-item">
-             <a class="nav-link" href="./filter?type=Phones">Phones</a>
+             <a class="nav-link" href="./products-phones">Phones</a>
             </li>            
           </ul>
         </div>
@@ -135,19 +135,17 @@ tr{
 
 
     <div id="orta">
-    	<c:forEach items ="${product}" var="value">
-    	<div id="solimg"><img src=".\img\<c:out value = "${value.getImage()}"/>" alt="<c:out value = "${value.getProduct_Name()}"/>" height=350px" width="350px"></div>
+    	<div id="solimg"><img src=".\img\<c:out value = "${product.getImage()}"/>" alt="<c:out value = "${product.getProduct_Name()}"/>" height=350px" width="350px"></div>
     	<div id="sagbilgi">
     		<table>
-    			<tr><h1><c:out value = "${value.getProduct_Name()}"/></h1></tr>
-    			<tr><h5>₺ <c:out value = "${value.getPrice()}"/><br></h5></tr>
-    			<tr><p> <c:out value = "${value.getDetail()}"/> </p></tr>
-    			<tr><p> Stocks <c:out value = "${value.getStock().getStock()}"/> </p></tr>
-    			<tr><a href="AddCart-<c:out value = "${value.getID()}"/>"><button type="button" class="btn btn-success" id="addcartbutton" >Add Cart</button></a></tr>
+    			<tr><h1><c:out value = "${product.getProduct_Name()}"/></h1></tr>
+    			<tr><h5>₺ <c:out value = "${product.getPrice()}"/><br></h5></tr>
+    			<tr><p> <c:out value = "${product.getDetail()}"/> </p></tr>
+    			<tr><p> Stocks <c:out value = "${product.getStock().getStock()}"/> </p></tr>
+    			<tr><a href="AddCart-<c:out value = "${product.getID()}"/>"><button type="button" class="btn btn-success" id="addcartbutton" >Add Cart</button></a></tr>
     			
     		</table>
     	</div>
-    	</c:forEach>
     </div>
 
     <footer class="py-5 bg-dark">

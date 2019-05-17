@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.aydin.sda.Entity.Colors;
+import edu.aydin.sda.Entity.Phones;
 import edu.aydin.sda.Entity.Products;
 import edu.aydin.sda.Entity.Stocks;
 import edu.aydin.sda.Entity.Users;
@@ -60,49 +61,6 @@ public class MyController {
 		}
 		model.addAttribute("passwordw", 2);
 		return "/login";
-	}
-	@RequestMapping("/products")
-	public String products(Model model) {
-		Session session = Utill.getSessionFactory().openSession();
-		List <Products> products = 
-        		session.createQuery(
-        			"from Products", Products.class).list();
-		model.addAttribute("products",products);
-		model.addAttribute("type","Products");
-		session.close();
-		for(Products p: products)
-			System.out.println(p.getDetail());
-		return "/products.jsp";
-	}
-	@RequestMapping("/products-{type}")
-	public String productsType(Model model, @PathVariable("type")String type) {
-		Session session = Utill.getSessionFactory().openSession();
-		/*Transaction t;
-		t = session.beginTransaction();
-		Products p1 = new Products();
-		p1.setDetail("");
-		p1.setImage("");
-		p1.setPrice(1);
-		p1.setProduct_Name("");
-		p1.setProduct_Type("");
-		session.save(p1);
-		t.commit();*/
-		List <Products> products = 
-        		session.createQuery(
-        			"from Products where Product_Type = '"+type+"'", Products.class).list();
-		model.addAttribute("products",products);
-		model.addAttribute("type",type);
-		session.close();
-		/*for(Products p: products)
-			System.out.println(p.getProduct_Name());*/
-		return "/products.jsp";
-	}
-	@RequestMapping("/product{id}")
-	public String ProductDetail(@PathVariable("id")String id,Model model) {
-		Session session = Utill.getSessionFactory().openSession();
-		Products product = session.createQuery("from Products where id = "+Integer.parseInt(id),Products.class).getSingleResult();
-		model.addAttribute("product",product);
-		return "/detail.jsp";
 	}
 	@RequestMapping("/logout")
 	public String LogOut(HttpServletRequest request) {
@@ -156,6 +114,50 @@ public class MyController {
 		model.addAttribute("error1", 1);
 		return "/register";
 	}
+	@RequestMapping("/products")
+	public String products(Model model) {
+		Session session = Utill.getSessionFactory().openSession();
+		List <Products> products = 
+        		session.createQuery(
+        			"from Products", Products.class).list();
+		model.addAttribute("products",products);
+		model.addAttribute("type","Products");
+		session.close();
+		for(Products p: products)
+			System.out.println(p.getDetail());
+		return "/products.jsp";
+	}
+	@RequestMapping("/products-{type}")
+	public String productsType(Model model, @PathVariable("type")String type) {
+		Session session = Utill.getSessionFactory().openSession();
+		/*Transaction t;
+		t = session.beginTransaction();
+		Products p1 = new Products();
+		p1.setDetail("");
+		p1.setImage("");
+		p1.setPrice(1);
+		p1.setProduct_Name("");
+		p1.setProduct_Type("");
+		session.save(p1);
+		t.commit();*/
+		List <Products> products = 
+        		session.createQuery(
+        			"from Products where Product_Type = '"+type+"'", Products.class).list();
+		model.addAttribute("products",products);
+		model.addAttribute("type",type);
+		session.close();
+		/*for(Products p: products)
+			System.out.println(p.getProduct_Name());*/
+		return "/products.jsp";
+	}
+	@RequestMapping("/product{id}")
+	public String ProductDetail(@PathVariable("id")String id,Model model) {
+		Session session = Utill.getSessionFactory().openSession();
+		Products product = session.createQuery("from Products where id = "+Integer.parseInt(id),Products.class).getSingleResult();
+		model.addAttribute("product",product);
+		return "/detail.jsp";
+	}
+	
 	@RequestMapping("/setStok{id}-{stock}")
 	public String AddStock(
 			@PathVariable("id")int id,
@@ -194,14 +196,6 @@ public class MyController {
 		transaction.commit();
 		session.close();
 		return "redirect:/products";
-	}
-	@RequestMapping("/deneme")
-	public String ShowStock() {
-		Session session = Utill.getSessionFactory().openSession();
-		Products product = session.createQuery("from Products where id = "+66,Products.class).getSingleResult();
-		session.close();
-		System.out.println(product.getStock().getStock());
-		return "";
 	}
 	@RequestMapping("/AddCart-{id}")
 	public String AddCart(
@@ -264,26 +258,31 @@ public class MyController {
         			"from Products", Products.class).list();
 		model.addAttribute("products",products);
 		session.close();
-		model.addAttribute("products",products);
 		return "/adminPanelProducts.jsp";
 	}
 	@RequestMapping("/AddProduct")
 	public String addProduct() {
 		return "/adminPanelAddProduct.jsp";
 	}
-	@PostMapping("/adminPanelProducts")
+	@PostMapping("/addProduct")
 	public String addProductPost(
 			@RequestParam(value="image",required=true)String img,
 			@RequestParam(value="name",required=true)String name,
 			@RequestParam(value="type",required=true)String type,
 			@RequestParam(value="price",required=true)float price,
+			@RequestParam(value="stock",required=true)int stock,
 			@RequestParam(value="details",required=false)String details,
 			@RequestParam(value="colors",required=false)List<Colors> colors){
 		Session session = Utill.getSessionFactory().openSession();
 		Transaction transaction = null;
 		transaction = session.beginTransaction();
 		Products p = new Products(img,name,type,price,details);
+		Stocks s = new Stocks();
+		s.setStock(stock);
+		p.setStock(s);
 		session.save(p);
+		transaction.commit();
+		transaction = session.beginTransaction();
 		transaction.commit();
 		session.close();
 		return "redirect:/adminPanelProducts";
@@ -364,7 +363,9 @@ public class MyController {
 		product.setProduct_Name(name);
 		product.setProduct_Type(type);
 		product.setPrice(price);
-		product.getStock().setStock(stock);;
+		Stocks s = new Stocks(id,stock);
+		session.save(s);
+		product.setStock(s);
 		product.setDetail(detail);
 		session.save(product);
 		transaction.commit();
@@ -382,7 +383,47 @@ public class MyController {
 		session.remove(product);
 		transaction.commit();
 		session.close();
-		return "redirect:/adminPanelUsers";
+		return "redirect:/adminPanelProducts";
 	}
-	
+	/*@PostMapping("/addPhoneNumber{id}-{phone}")
+	public String addPhoneNumber(
+			@PathVariable("id")int id,
+			@PathVariable("phone")int phone){
+		Session session = Utill.getSessionFactory().openSession();
+		Transaction transaction;
+		transaction = session.getTransaction();
+		transaction.begin();
+		Users user = session.createQuery("from Users where id="+id,Users.class).getSingleResult();
+		Phones p = new Phones(phone);
+		user.setPhone_numbers(p);
+		session.save(user);
+		return "redirect:/adminPanelUsers";
+	}*/
+	@RequestMapping("/addColor{id}")
+	public String addColor(
+			@PathVariable("id")int id,
+			Model model) {
+		Session session = Utill.getSessionFactory().openSession();
+		Products p = session.createQuery("from Products where id="+id,Products.class).getSingleResult();
+		model.addAttribute("product",p);
+		return "/AddColor.jsp";
+	}
+	@PostMapping("/addColor")
+	public String addColorPost(
+			@RequestParam("id")int id,
+			@RequestParam("color")String color){
+		Session session = Utill.getSessionFactory().openSession();
+		Transaction transaction;
+		transaction = session.getTransaction();
+		transaction.begin();
+		Products p = session.createQuery("from Products where id="+id,Products.class).getSingleResult();
+		Colors c = new Colors();
+		c.setColor(color);
+		session.save(c);
+		p.setColors(c);
+		session.save(p);
+		transaction.commit();
+		session.close();
+		return "redirect:/adminPanelProducts";
+	}
 }

@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,8 +28,8 @@ public class Products {
 	private String Detail;
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id")
-	Stocks Stock;
-	@ManyToMany(cascade = CascadeType.ALL)
+	Stocks Stock = new Stocks();
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "colorProduct",
 		joinColumns = @JoinColumn(name = "post_id"),
 		inverseJoinColumns = @JoinColumn(name = "color_id")

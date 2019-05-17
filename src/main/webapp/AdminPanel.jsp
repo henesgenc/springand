@@ -33,7 +33,7 @@ left:19%;
 <h2>Menu</h1>
 <a href="./adminPanelUsers">Users</a><br>
 <a href="./adminPanelProducts">Products</a><br>
-<a href="./adminPanelAddProduct.jsp">Add Product</a><br>
+<a href="./AddProduct">Add Product</a><br>
 </div>
 <div id="container"><h1>Welcome to the Admin Panel.</h1></div>
 

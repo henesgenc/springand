@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" isELIgnored="false"%>
+    <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<title>Add Color</title>
 <style>
 td{
 	border:1px solid;
@@ -28,42 +30,35 @@ font-size:x-large;
 color:blue;
 }
 #container{
+top:5%;
 position:absolute;
 left:19%;
-top:5%;
+}
+input{
+width:100%;
+}
+textarea{
+width:100%;
 }
 </style>
-<title>Add Product</title>
 </head>
 <body>
 <div id="menu">
-<h2>Menu</h1>
+<h2>Menu</h2>
 <a href="./adminPanelUsers">Users</a><br>
 <a href="./adminPanelProducts">Products</a><br>
 <a href="./AddProduct">Add Product</a><br>
 </div>
 <div id="container">
-<form action="addProduct" method="post">
+<form action="addColor" method="post" name="edit">
 <table>
 <tr>
-<td><p>Product Image : </p></td>
-<td><input type="file" name="image" accept="image/*" required></td>
+<td><p>ID : </p></td>
+<td><input type="text" name="id" readonly="readonly" value="<c:out value="${product.getID()}"/>"></td>
 </tr>
 <tr>
-<td><p>Product Name : </p></td>
-<td><input type="text" name="name" placeholder="Name" required></td>
-</tr>
-<tr>
-<td><p>Product Type : </p></td>
-<td><input type="text" name="type" placeholder="Type" required></td>
-</tr>
-<tr>
-<td><p>Price : </p></td>
-<td><input type="number" name="price" placeholder="Price" required></td>
-</tr>
-<tr>
-<td><p>Details : </p></td>
-<td><textarea name="details" rows="10" cols="21" placeholder="Write Details Here" required></textarea></td>
+<td><p>Color : </p></td>
+<td><input type="text" name="color" value="" placeholder="Write Color"/></td>
 </tr>
 <tr>
 <td colspan="2" >

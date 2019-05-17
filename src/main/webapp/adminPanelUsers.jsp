@@ -14,10 +14,10 @@ table{ margin-left:18%;}
 </head>
 <body>
 <div id="menu">
-<h2>Menu</h1>
+<h2>Menu</h2>
 <a href="./adminPanelUsers">Users</a><br>
 <a href="./adminPanelProducts">Products</a><br>
-<a href="./adminPanelAddProduct.jsp">Add Product</a><br>
+<a href="./AddProduct">Add Product</a><br>
 </div>
 <table>
 <tr style="font-weight: bold;">

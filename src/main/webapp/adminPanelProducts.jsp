@@ -42,12 +42,12 @@ top:5%;
 <h2>Menu</h1>
 <a href="./adminPanelUsers">Users</a><br>
 <a href="./adminPanelProducts">Products</a><br>
-<a href="./adminPanelAddProduct.jsp">Add Product</a><br>
+<a href="./AddProduct">Add Product</a><br>
 </div>
 <div id="container">
 <table style="margin-right: 50px; margin-bottom: 50px">
 <tr style="font-weight: bold;">
-<td>ID</td><td>Name</td><td>Price</td><td>Image</td><td>Type</td><td>Detail</td><td>Stocks</td>
+<td>ID</td><td>Name</td><td>Price</td><td>Image</td><td>Type</td><td>Colors</td><td>Detail</td><td>Stocks</td>
 </tr>
 <c:forEach items ="${products}" var="value">
 <tr>
@@ -56,10 +56,12 @@ top:5%;
 <td>₺<c:out value = "${value.getPrice()}"/></td>
 <td>/img/<c:out value = "${value.getImage()}"/></td>
 <td><c:out value = "${value.getProduct_Type()}"/></td>
+<td><c:forEach items = "${value.getColors()}" var="x"><c:out value = "${x.getColor()}"/><br></c:forEach></td>
 <td><c:out value = "${value.getDetail()}"/></td>
 <td><c:out value = "${value.getStock().getStock()}"/></td>
 <td><a href="./editProduct<c:out value = "${value.getID()}"/>">Edit</a></td>
 <td><a href="./deleteProduct<c:out value = "${value.getID()}"/>">Delete</a></td>
+<td><a href="./addColor<c:out value = "${value.getID()}"/>">Add Color</a></td>
 </tr>
 </c:forEach>
 </table>
